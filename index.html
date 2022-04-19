@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Timer</title>
+        <meta charset="utf-8">
+        <style>
+            #timer {
+                background-color: rgb(34, 101, 201);
+                border-radius: 15px;
+                margin: 0 auto;
+                padding: 20px;
+                width: 400px;
+                height: 200px; 
+                margin-top: 220px;
+            }
+
+            #display {
+                background-color: lightgray;
+                border-radius: 15px;
+                width: 90%;
+                height: 90px;
+                margin: 10px auto;
+                padding: 10px;
+                font-family: monospace;
+                font-size: 80px;
+                text-align: right;
+            }
+
+            #footer {
+                padding: 10px;
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            #button {
+                display: block;
+                margin-left: auto;
+                border-radius: 5px;
+                width: 100px;
+                height: 50px;
+                font-size: 20px;
+                font-family: monospace;
+            }
+        </style>
+        <script>
+            var timerId = 0;
+            var startTime = 0;
+            var status = "reset";
+
+            function start() {
+                startTime = Date.now();
+                timerId = setInterval(onTimer, 100);
+            }
+
+            function onTimer() {
+                var now = Date.now();
+                var seconds = Math.floor((now - startTime) / 1000.0);
+
+                var element = document.getElementById('display');
+                element.innerHTML = seconds;
+            }
+
+            function stop() {
+                clearInterval(timerId);
+            }
+
+            function reset() {
+                var element = document.getElementById('display');
+                element.innerHTML = '0';
+            }
+
+            function onButton() {
+                var buttonElement = document.getElementById('button');
+
+                if(status == 'reset') {
+                    start();
+                    status = 'start';
+                    button.innerHTML = 'Stop';
+                }
+                else if(status == 'start') {
+                    stop();
+                    status = 'stop';
+                    button.innerHTML  = 'Reset'
+                }
+                else if(status == 'stop') {
+                    reset();
+                    status = 'reset';
+                    button.innerHTML = 'Start';
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="timer">
+            <div id="display">0</div>
+            <div id="footer">
+                <button onclick="onButton();" id="button">Start</button>
+            </div>
+        </div>
+    </body>
+</html>
